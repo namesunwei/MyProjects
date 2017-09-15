@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "内容页";
+}
+
+
+@for (var i = 0; i < 10; i++)
+{
+    <h3 contenteditable="true">分类页面</h3>
+    <p contenteditable="true">本可视化布局程序在HTML5浏览器上运行更加完美, 能实现自动本地化保存, 即使关闭了网页, 下一次打开仍然能恢复上一次的操作.<a class="btn" contenteditable="true" href="#">查看更多 »</a></p>
+    if (i != 9)
+    {
+        <hr />
+    }
+
+}

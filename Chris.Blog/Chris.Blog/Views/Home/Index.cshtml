@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "首页";
+}
+
+
+@for (var i = 0; i < 10; i++)
+{
+    <h3 contenteditable="true">标题</h3>
+    <p contenteditable="true">本可视化布局程序在HTML5浏览器上运行更加完美, 能实现自动本地化保存, 即使关闭了网页, 下一次打开仍然能恢复上一次的操作.<a class="btn" contenteditable="true" href="#">查看更多 »</a></p>
+    if (i != 9)
+    {
+        <hr />
+    }
+
+}
+
+<div class="pagination pagination-centered">
+    <ul contenteditable="true">
+        <li><a href="#">上一页</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">下一页</a></li>
+    </ul>
+</div>
