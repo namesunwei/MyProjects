@@ -19,7 +19,25 @@ namespace Chris.Blog.Services
         {
             _idWorker = new IdWorker(1, 1);
         }
-
+        /// <summary>
+        /// 根据ID查询单条博文
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<ArticleDomain> QueryByIdAsync(long id)
+        {
+            using (DbConnection)
+            {
+                DbConnection.Open();
+                var data = await DbConnection.QueryFirstOrDefaultAsync<Article>($"SELECT * FROM articles WHERE id={id}");
+                return data != null ? Mapper.Map<ArticleDomain>(data) : null;
+            }
+        }
+        /// <summary>
+        /// 新增一条博文
+        /// </summary>
+        /// <param name="domainModel"></param>
+        /// <returns></returns>
         public async Task<long> AddAsync(ArticleDomain domainModel)
         {
             var data = Mapper.Map<Article>(domainModel);
@@ -30,21 +48,33 @@ namespace Chris.Blog.Services
             {
                 connection.Open();
 
-                const string query = "INSERT INTO articles(id,categoryId,userId,title,content,createAt,modifyAt,isTop,isDisplay,hits,tags) VALUES (@id,@categoryId,@userId,@title,@content,@createAt,@modifyAt,@isTop,@isDisplay,@hits,@tags)";
+                const string sql = "INSERT INTO articles(id,categoryId,userId,title,content,createAt,modifyAt,isTop,isDisplay,hits,tags) VALUES (@id,@categoryId,@userId,@title,@content,@createAt,@modifyAt,@isTop,@isDisplay,@hits,@tags)";
 
-                var count = await connection.ExecuteReaderAsync(query, data);
+                var count = await connection.ExecuteReaderAsync(sql, data);
+
+                return data.Id;
             }
-            return data.Id;
+          
         }
 
-        public async Task<ArticleDomain> QueryByIdAsync(long id)
+        public async Task<ArticleDomain> ModifyByIdAsync(long id, ArticleDomain domainModel)
         {
-            using (DbConnection)
+            var data = Mapper.Map<Article>(domainModel);
+
+            data.Id = id;
+
+            using (var connection = DbConnection)
             {
-                DbConnection.Open();
-                var data = await DbConnection.QueryFirstAsync<Article>($"SELECT * FROM articles WHERE id={id}");
-                return data != null ? Mapper.Map<ArticleDomain>(data) : null;
+                connection.Open();
+
+                const string sql = "UPDATE articles SET title =@Title ,content =@Content WHERE id =@Id";
+
+                var count = await connection.ExecuteReaderAsync(sql, data);
+
             }
+
         }
+
+
     }
 }

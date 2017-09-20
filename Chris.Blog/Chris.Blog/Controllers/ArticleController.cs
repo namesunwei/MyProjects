@@ -22,6 +22,7 @@ namespace Chris.Blog.Controllers
             _articlesService = articlesService;
         }
 
+        #region 展示博文
         [HttpGet("Index/{id}")]
         public async Task<IActionResult> Index(long id)
         {
@@ -35,6 +36,9 @@ namespace Chris.Blog.Controllers
 
             return View(viewModel);
         }
+        #endregion
+
+        #region 新增博文
         [HttpGet("Add")]
         public IActionResult Add()
         {
@@ -49,5 +53,15 @@ namespace Chris.Blog.Controllers
 
             return Json(new { data = Url.Action("Index", new { id = articleId }) });
         }
+        #endregion
+
+        #region 修改博文
+         //todo:修改博文
+
+        #endregion
+
+        #region 删除博文
+        //todo:删除功能
+        #endregion
     }
 }

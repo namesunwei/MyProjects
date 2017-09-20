@@ -113,6 +113,8 @@ function submitContent() {
 
     var content = UE.getEditor('editor').getContent();
 
+    var data = encodeURIComponent(content);
+
     var title = $("#articleTitle").val();
 
     if (content.trim().length === 0 || title.trim().length === 0) {
@@ -120,12 +122,12 @@ function submitContent() {
     }
     else {
         $.ajax({
-            url: "/article/add",
-            data: "title=" + title + "&content=" + content,
             type: "POST",
-            dataType: "json",
+            url: "/article/add",
+            dataType: "JSON",
+            data: { "content": content, "title": title },
             success: function (res) {
-                window.location = res.data;
+                window.location.href = res.data;
             }
         });
     }
